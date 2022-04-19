@@ -1,0 +1,1 @@
+for /L %%i in (3,1,15) do (md Exp2-%%i & cd .\Exp2-%%i & copy nul Exp2-%%i.md & cd ../)
