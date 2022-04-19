@@ -1,0 +1,3 @@
+﻿  源1.cpp
+C:\Users\Lenovo\Documents\清华\大一\程设\Experiment\as\as\源1.cpp(18,2): warning C4091: “typedef ”: 没有声明变量时忽略“point”的左侧
+  as.vcxproj -> C:\Users\Lenovo\Documents\清华\大一\程设\Experiment\as\x64\Debug\as.exe

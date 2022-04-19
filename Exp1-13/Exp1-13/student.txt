@@ -1,0 +1,10 @@
+1 alice female 2003 1 20 78.00
+2 bob male 2004 11 1 95.50
+3 carol female 2002 12 3 88.80
+4 dave male 2002 2 3 78.70
+5 eve male 2003 6 8 89.50
+6 francis male 2003 4 6 85.40
+7 grace male 2004 3 4 67.60
+8 hans male 2003 1 2 60.00
+9 isabella female 2005 4 5 80.00
+10 jason male 2002 7 8 90.00
