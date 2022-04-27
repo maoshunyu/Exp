@@ -44,4 +44,6 @@ int main() {
 	cout << "周长：" << cir.GetPerim() << "  " << "面积：" << cir.GetArea() << endl;
 	cout << "周长：" << in.GetPerim() << "  " << "面积：" << in.GetArea() << endl;
 	cout << "周长：" << out.GetPerim() << "  " << "面积：" << out.GetArea() << endl;
+
 }
+
