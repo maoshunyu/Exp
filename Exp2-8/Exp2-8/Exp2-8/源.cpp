@@ -1,52 +1,53 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: Mao Shunyu
+ * @Date: 2022-05-01 22:36:03
+ * @LastEditors: Do not edit
+ * @LastEditTime: 2022-07-03 18:17:32
+ */
 #include <iostream>
 using namespace std;
 class Shape {
 public:
-	Shape() {}
-	virtual ~Shape() {}
-	virtual double getC() = 0;
-	virtual double getS() = 0;
-private:
+  Shape() {}
+  virtual ~Shape() {}
+  virtual double getC() = 0;
+  virtual double getS() = 0;
 
+private:
 };
-class Circle :public Shape{
+class Circle : public Shape {
 public:
-	Circle(double radius):r(radius) {}
+  Circle(double radius) : r(radius) {}
 
-	~Circle() {}
-	virtual double getC() {
-		return 2 * 3.14159 * r;
-	}
-	virtual double getS() {
-		return 3.14159 * r * r;
-	}
+  ~Circle() {}
+  virtual double getC() { return 2 * 3.14159 * r; }
+  virtual double getS() { return 3.14159 * r * r; }
+
 private:
-	double r;
+  double r;
 };
-class Rectangle :public Shape{
+class Rectangle : public Shape {
 public:
-	Rectangle(double length):len(length) {}
+  Rectangle(double length) : len(length) {}
 
-	~Rectangle() {}
-	virtual double getC() {
-		return 4 * len;
-	}
-	virtual double getS() {
-		return len * len;
-	}
+  ~Rectangle() {}
+  virtual double getC() { return 4 * len; }
+  virtual double getS() { return len * len; }
+
 private:
-	double len;
+  double len;
 };
-double getPerim( Shape& s) {
-	return s.getC();
-}
-double getArea( Shape& s) {
-	return s.getS();
-}
+double getPerim(Shape& s) { return s.getC(); }
+double getArea(Shape& s) { return s.getS(); }
 int main() {
-	Circle cir(3.0);
-	Rectangle in(2.0 * 3.0 / 1.414), out(2 * 3.0);
-	cout << "ÖÜ³¤£º" << getPerim(cir) << "  " << "Ãæ»ý£º" << getArea(cir) << endl;
-	cout << "ÖÜ³¤£º" << in.getC() << "  " << "Ãæ»ý£º" << in.getS() << endl;
-	cout << "ÖÜ³¤£º" << out.getC() << "  " << "Ãæ»ý£º" << out.getS() << endl;
+  Circle cir(3.0);
+  Rectangle in(2.0 * 3.0 / 1.414), out(2 * 3.0);
+  cout << "ï¿½Ü³ï¿½ï¿½ï¿½" << getPerim(cir) << "  "
+       << "ï¿½ï¿½ï¿½ï¿½ï¿½" << getArea(cir) << endl;
+  cout << "ï¿½Ü³ï¿½ï¿½ï¿½" << in.getC() << "  "
+       << "ï¿½ï¿½ï¿½ï¿½ï¿½" << in.getS() << endl;
+  cout << "ï¿½Ü³ï¿½ï¿½ï¿½" << out.getC() << "  "
+       << "ï¿½ï¿½ï¿½ï¿½ï¿½" << out.getS() << endl;
 }

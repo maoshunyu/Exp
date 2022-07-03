@@ -1,49 +1,67 @@
-#include<iostream>
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: Mao Shunyu
+ * @Date: 2022-05-01 22:36:03
+ * @LastEditors: Do not edit
+ * @LastEditTime: 2022-07-03 18:16:16
+ */
+#include <iostream>
 using namespace std;
-class complex{ 
-public:complex(double r, double i): r(r), i(i){cout<<"Constructor!"<<*this ; }
-	  complex(double r): r(r), i(0){cout<<"Cast Constructor!"<< *this;}
-	  complex(const complex &c): r(c.r), i(c.i){cout<<"Copy Constructor!"<< *this;}
-	  //operator double()//ÀàÐÍ×ª»»º¯Êý
-	  //{cout<<"Cast Double!"<<r<<endl; return r;}
-	  ~complex(){cout<<"Destructor!"<< *this;}//Îö¹¹º¯Êý
-	  friend complex operator+(const complex &, const complex &); //ÖØÔØÔËËã·û+Îª³ÉÔ±º¯Êý
-	  friend ostream &operator<<(ostream &, const complex& );   //ÖØÔØÊä³öº¯Êý
-private:double r, i;
-	   //¸´ÊýÊµ²¿¡¢Ðé²¿
+class complex {
+public:
+  complex(double r, double i) : r(r), i(i) { cout << "Constructor!" << *this; }
+  complex(double r) : r(r), i(0) { cout << "Cast Constructor!" << *this; }
+  complex(const complex &c) : r(c.r), i(c.i) {
+    cout << "Copy Constructor!" << *this;
+  }
+  // operator double()//ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  //{cout<<"Cast Double!"<<r<<endl; return r;}
+  ~complex() { cout << "Destructor!" << *this; }  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  friend complex operator+(const complex &,
+                           const complex &);  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+Îªï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½
+  friend ostream &operator<<(ostream &, const complex &);  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+private:
+  double r, i;
+  //ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½é²¿
 };
-complex operator+(const complex& c1, const complex& c2) //³ÉÔ±º¯ÊýÓÐÒ»¸ö²ÎÁ¿
-{ return complex(c1.r+c2.r, c1.i+c2.i); }
-ostream &operator<<(ostream &output, const complex& c) //ÖØÔØÊä³öº¯Êý
-{ output<<"("<<c.r<<","<<c.i<<")"<<endl;  return output; }
-int main(){ 
-	//mainº¯Êý£¬³ÌÐòµÄÖ÷Ìå
-	complex c1(5,4), c2(2,10);//ÉùÃ÷¸´ÊýÀà¶ÔÏó
-	cout <<c1+c2;
-	cout << c1 << c2 ;
-	return 0;
+complex operator+(const complex &c1, const complex &c2)  //ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+{
+  return complex(c1.r + c2.r, c1.i + c2.i);
+}
+ostream &operator<<(ostream &output, const complex &c)  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+{
+  output << "(" << c.r << "," << c.i << ")" << endl;
+  return output;
+}
+int main() {
+  // mainï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  complex c1(5, 4), c2(2, 10);  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  cout << c1 + c2;
+  cout << c1 << c2;
+  return 0;
 }
 //#include <iostream>
 //
-//using namespace std;
+// using namespace std;
 //
-//class Complex
+// class Complex
 //
 //{
-//public:
+// public:
 //
-//    Complex() { real = 0; imag = 0; }    //Ä¬ÈÏ¹¹Ôìº¯Êý
+//    Complex() { real = 0; imag = 0; }    //Ä¬ï¿½Ï¹ï¿½ï¿½ìº¯ï¿½ï¿½
 //
-//    Complex(double r) { real = r; imag = 0; } //×ª»»¹¹Ôìº¯Êý
+//    Complex(double r) { real = r; imag = 0; } //×ªï¿½ï¿½ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½
 //
-//    Complex(double r, double i) { real = r; imag = i; }//ÊµÏÖ³õÊ¼»¯µÄ¹¹Ôìº¯Êý
+//    Complex(double r, double i) { real = r; imag = i; }//Êµï¿½Ö³ï¿½Ê¼ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ìº¯ï¿½ï¿½
 //
-//    friend Complex operator + (Complex c1, Complex c2); //ÖØÔØÔËËã·û      
-//                                                      //"+"µÄÓÑÔªº¯Êý
+//    friend Complex operator + (Complex c1, Complex c2); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//                                                      //"+"ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½
 //
 //    void display();
 //
-//private:
+// private:
 //
 //    double real;
 //
@@ -51,25 +69,25 @@ int main(){
 //
 //};
 //
-//Complex operator + (Complex c1, Complex c2)//¶¨ÒåÔËËã·û"+"ÖØ 
-//                                                            //ÔØº¯Êý
+// Complex operator + (Complex c1, Complex c2)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+"ï¿½ï¿½
+//                                                            //ï¿½Øºï¿½ï¿½ï¿½
 //
 //{
 //    return Complex(c1.real + c2.real, c1.imag + c2.imag);
 //}
 //
-//void Complex::display()
+// void Complex::display()
 //
 //{
 //    cout << "( "<< real << ", " << imag << "i" << endl;
 //}
 //
-//int main()
+// int main()
 //
 //{
 //    Complex c1(3, 4), c2(5, -10), c3;
 //
-//    c3 = c1 + 2.5;          //¸´ÊýÓëdoubleÊý¾ÝÏà¼Ó
+//    c3 = c1 + 2.5;          //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½doubleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //
 //    c3.display();
 //
