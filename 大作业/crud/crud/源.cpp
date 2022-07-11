@@ -4,7 +4,7 @@
  * @Author: Mao Shunyu
  * @Date: 2022-06-27 16:21:08
  * @LastEditors: Do not edit
- * @LastEditTime: 2022-07-03 18:17:23
+ * @LastEditTime: 2022-07-11 13:52:59
  */
 #include <algorithm>
 #include <fstream>
@@ -28,7 +28,10 @@ void display(int choose, int main_index, int sub_index, bool is_reverse);
 class dat {
 public:
   dat(string& student_id, string& name, string& course, double score)
-      : student_id(student_id), name(name), course(course), score(score){};
+      : student_id(student_id),
+        name(name),
+        course(course),
+        score(score){};  //储存基本信息
   int id;
   string student_id;
   string name;
@@ -73,12 +76,23 @@ public:
   Undergraduate_Log(string& student_id, string& name, string& course,
                     double score, string& grade, int id = 0)
       : Log(student_id, name, course, score, id), grade(grade){};
+  /**
+   * @msg: 打印到屏幕
+   * @param {ostream&} out 输出
+   * @return {*}
+   */
   virtual void print(ostream& out) {
     out << id << "\t" << student_id << "\t" << name << "\t" << course << "\t"
         << score << "\t"
         << "本科生"
         << "\t" << grade;
   }
+
+  /**
+   * @msg: 输出到文件
+   * @param {ofstream&} out 输出
+   * @return {*}
+   */
   virtual void write(ofstream& out) {
     out << id << "," << student_id << "," << name << "," << course << ","
         << score << ","
@@ -120,6 +134,7 @@ public:
 Log::Log(string& student_id, string& name, string& course, double score, int id)
     : dat(student_id, name, course, score) {
   get_max_id();
+  //设定新纪录的id
   if (id == 0) {
     this->id = max_id + 1;
     Log::max_id = this->id;
@@ -130,7 +145,7 @@ Log::~Log() { get_max_id(this->id); }
 
 int Log::max_id = 0;
 
-/*-------------------------------------------方法实现-------------------------------------------*/
+/*-------------------------------------------方法-------------------------------------------*/
 vector<string> stringSplit(const string& str, char delim) {
   stringstream ss(str);
   string item;
@@ -140,6 +155,11 @@ vector<string> stringSplit(const string& str, char delim) {
   }
   return elems;
 }
+/**
+ * @msg: 更新所有记录中的最大id
+ * @param {int} except 忽略的元素
+ * @return {*}
+ */
 void Log::get_max_id(int except) {
   if (logs.size() == 0) {
     max_id = 0;
@@ -157,6 +177,7 @@ void Log::get_max_id(int except) {
 /*-----------------------------------------------------------------------*/
 void display(int choose, int main_index, int sub_index, bool is_reverse) {
   vector<int> indexes;
+  //选择要查看的条目
   if (choose == 9) return;
   else if (choose == 1)
     for (int i = 0; i < logs.size(); i++) indexes.push_back(i);
@@ -168,12 +189,15 @@ void display(int choose, int main_index, int sub_index, bool is_reverse) {
     if (choose == 5) temp = atof(t.c_str());
     else temp = t;
     for (int i = 0; i < logs.size(); i++) {
+      //查找对应的条目
       if ((choose != 5 && logs[i]->get(choose) == temp) ||
           (choose == 5 && abs(get<double>(temp) -
                               get<double>(logs[i]->get(choose))) <= 1.0e-4))
         indexes.push_back(i);
     }
   }
+
+  //排序
   if (is_reverse)
     sort(indexes.begin(), indexes.end(), [=](int a, int b) {
       return (logs[a]->get(main_index) == logs[b]->get(main_index))
@@ -207,7 +231,7 @@ void view() {
   getchar();
   getline(cin, line);
   vector<string> v = stringSplit(line, ' ');
-  map<string, int> m;
+  map<string, int> m;  //记录每个参数的位置
   for (int i = 0; i < v.size(); i++) {
     if (v.at(i)[0] == '-') { m[v.at(i).substr(1, v.at(i).size() - 1)] = i; }
   }
@@ -256,13 +280,13 @@ void del() {
       have_found = true;
       delete *it;
       *it = nullptr;
-      logs.erase(it);
+      logs.erase(it);  //删除这条记录
       break;
     }
   }
   if (have_found) {
     ofstream file("data.csv", ios::out);
-    for (int i = 0; i < logs.size(); i++) logs[i]->write(file);
+    for (int i = 0; i < logs.size(); i++) logs[i]->write(file);  //重新写入
     cout << "删除成功" << endl;
     file.close();
   } else cout << "未找到该成绩记录!" << endl;
@@ -301,6 +325,7 @@ int main(int argc, char const* argv[]) {
     return 0;
   }
   string line;
+  //读取文件内容
   while (getline(file, line)) {
     vector<string> strs = stringSplit(line, ',');
     if (!strs.empty()) {
