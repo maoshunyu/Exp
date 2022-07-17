@@ -4,7 +4,7 @@
  * @Author: Mao Shunyu
  * @Date: 2022-06-27 16:21:08
  * @LastEditors: Do not edit
- * @LastEditTime: 2022-07-11 13:52:59
+ * @LastEditTime: 2022-07-13 12:48:48
  */
 #include <algorithm>
 #include <fstream>
@@ -37,7 +37,7 @@ public:
   string name;
   string course;
   double score;
-  virtual variant<string, double> get(int i) {
+  virtual variant<string, double> operator[](int i) {
     switch (i) {
       case 1: return id;
       case 2: return student_id;
@@ -100,9 +100,10 @@ public:
         << "," << grade << endl;
   }
   void set_grade(string& grade) { this->grade = grade; }
-  variant<string, double> get(int i) {
-    if (i == 6) return grade;
-    else return Log::get(i);
+  variant<string, double> operator[](int i) {
+    if (i == 6) return "本科生";
+    else if (i == 7) return grade;
+    else return Log::operator[](i);
   }
 };
 class Graduate_Log : virtual public Log {
@@ -125,9 +126,10 @@ public:
         << "," << grade << endl;
   }
   void set_grade(string& grade) { this->grade = grade; }
-  variant<string, double> get(int i) {
-    if (i == 6) return grade;
-    else return Log::get(i);
+  variant<string, double> operator[](int i) {
+    if (i == 6) return "研究生";
+    else if (i == 7) return grade;
+    else return Log::operator[](i);
   }
 };
 
@@ -190,26 +192,21 @@ void display(int choose, int main_index, int sub_index, bool is_reverse) {
     else temp = t;
     for (int i = 0; i < logs.size(); i++) {
       //查找对应的条目
-      if ((choose != 5 && logs[i]->get(choose) == temp) ||
-          (choose == 5 && abs(get<double>(temp) -
-                              get<double>(logs[i]->get(choose))) <= 1.0e-4))
+      if ((choose != 5 && (*logs[i])[choose] == temp) ||
+          (choose == 5 &&
+           abs(get<double>(temp) - get<double>((*logs[i])[choose])) <= 1.0e-4))
         indexes.push_back(i);
     }
   }
 
   //排序
-  if (is_reverse)
-    sort(indexes.begin(), indexes.end(), [=](int a, int b) {
-      return (logs[a]->get(main_index) == logs[b]->get(main_index))
-                 ? logs[a]->get(sub_index) > logs[b]->get(sub_index)
-                 : logs[a]->get(main_index) > logs[b]->get(main_index);
-    });
-  else
-    sort(indexes.begin(), indexes.end(), [=](int a, int b) {
-      return (logs[a]->get(main_index) == logs[b]->get(main_index))
-                 ? logs[a]->get(sub_index) < logs[b]->get(sub_index)
-                 : logs[a]->get(main_index) < logs[b]->get(main_index);
-    });
+  sort(indexes.begin(), indexes.end(), [=](int a, int b) {
+    return (((*logs[a])[main_index] == (*logs[b])[main_index])
+                ? (*logs[a])[sub_index] < (*logs[b])[sub_index]
+                : (*logs[a])[main_index] < (*logs[b])[main_index]);
+  });
+  if (is_reverse) reverse(indexes.begin(), indexes.end());
+
   cout << "id\t学号\t\t姓名\t课程\t成绩\t学历\t年级" << endl;
   for (auto&& i : indexes) {
     logs[i]->print(cout);
@@ -224,6 +221,8 @@ void view() {
           "查看某学历学生的记录 \t7 查看某年级的成绩 \t9 返回"
        << endl;
   cout << "\t-m 主顺序: \t1 id \t2 学号 \t3 姓名 \t4 科目 \t5 成绩 \t默认: id"
+       << endl;
+  cout << "\t-s 次顺序: \t1 id \t2 学号 \t3 姓名 \t4 科目 \t5 成绩 \t默认: 学号"
        << endl;
   cout << "\t-r 开启反序: \t默认: 否" << endl;
   // example:    1 -m 1 -s 2 -r
@@ -278,6 +277,8 @@ void del() {
   for (auto it = logs.begin(); it != logs.end(); it++) {
     if ((*it)->id == id) {
       have_found = true;
+      (*it)->print(cout);
+      cout << endl;
       delete *it;
       *it = nullptr;
       logs.erase(it);  //删除这条记录
