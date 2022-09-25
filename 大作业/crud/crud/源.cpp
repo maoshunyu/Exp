@@ -351,7 +351,11 @@ int main(int argc, char const* argv[]) {
       case 2: add(); break;
       case 3: del(); break;
       case 4: change(); break;
-      default: cout << "输入错误" << endl; break;
+      default: cout << "输入错误,重新输入" << endl; 
+          cin.clear();
+          cin.ignore(1024, '\n');
+          cin >> choose;
+          continue;
     }
     cin.sync();
     cout << "输入 1 查看成绩 2 添加成绩 3 删除成绩 4 修改成绩 9 退出系统"
